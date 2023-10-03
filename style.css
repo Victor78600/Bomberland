@@ -1,0 +1,74 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --beige: #dbd5b5;
+  --orange: #fcab10;
+  --red: #f8333c;
+  --green: #44af69;
+  --blue: #2b9eb3;
+}
+
+body {
+  margin: 0;
+  font-family: "Pixelify Sans", cursive, sans-serif;
+  background-color: var(--blue);
+}
+h1 {
+  color: var(--orange);
+  text-align: center;
+  text-shadow: 2px 2px var(--red), 4px 4px var(--red), 6px 6px var(--red);
+  font-size: 5em;
+  margin-top: 0px;
+}
+
+.game {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 525px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.cell {
+  height: 35px;
+  width: 35px;
+  border: 1.5px solid black;
+  background-color: var(--beige);
+}
+
+.player {
+  background-color: var(--green);
+}
+
+.forbiddenCase {
+  background-color: #807c67;
+}
+
+.wall {
+  background-color: var(--orange);
+}
+
+.bomb {
+  background-color: black;
+  animation-duration: 0.8s;
+  animation-name: clignoter;
+  animation-iteration-count: infinite;
+  transition: none;
+}
+@keyframes clignoter {
+  0% {
+    background-color: black;
+  }
+  30% {
+    background-color: rgb(219, 219, 219);
+  }
+  100% {
+    background-color: black;
+  }
+}
+
+.impactBomb {
+  background-color: #f8333c;
+}
