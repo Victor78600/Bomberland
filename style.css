@@ -102,3 +102,7 @@ dialog button {
   font-size: 1em;
   font-family: "Pixelify Sans", cursive, sans-serif;
 }
+
+dialog::backdrop {
+  backdrop-filter: blur(4px) sepia(0.2);
+}

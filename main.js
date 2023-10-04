@@ -5,6 +5,8 @@ const scoreElement = document.querySelector("#score span");
 const restartButton = endGameScreen.querySelector("button");
 const looseGameScreen = document.getElementById("loose-game-screen");
 const replayButton = looseGameScreen.querySelector("button");
+const timeOutGameScreen = document.getElementById("timeout-game-screen");
+const tryAgainButton = timeOutGameScreen.querySelector("button");
 // const readyToPlay = document.getElementById("ready-to-play")
 
 /**
@@ -31,6 +33,7 @@ const forbiddenCases = [
 startButton.addEventListener("click", startGame);
 restartButton.addEventListener("click", restartGame);
 replayButton.addEventListener("click", restartGame);
+tryAgainButton.addEventListener("click", restartGame);
 
 function startGame() {
   startButton.hidden = true;
@@ -46,19 +49,32 @@ function startGame() {
 function restartGame() {
   endGameScreen.close();
   looseGameScreen.close();
+  timeOutGameScreen.close();
   score = -1;
   updateScore();
   playerPosition = 28;
-  startGame();
+  time = 30;
+  generateBoard();
+  showPlayer();
+  forbiddenCase();
+  wall(walls);
+  freePlayer();
+  bombe();
 }
 
 function timer() {
   let textTime = document.querySelector("#time span");
-  time--;
-  textTime.textContent = score;
-  // faire des parties de 30 secondes (à voir)
-  // la partie se termine à la fin du chrono
+  setInterval(() => {
+    textTime.textContent = time;
+    time = time <= 0 ? 0 : time - 1;
+    if (time === 0) {
+      timeOutGameScreen.showModal();
+    }
+  }, 1000);
 }
+
+// faire des parties de 30 secondes (à voir)
+// la partie se termine à la fin du chrono
 
 function updateScore() {
   let scroreFinal = document.querySelector("#score span");
@@ -241,18 +257,57 @@ function bombe() {
       }, 2000);
 
       setTimeout(() => {
-        // let bomb = document.querySelector(".bomb");
-        // const cellList = document.querySelectorAll(".cell");
-
         const explArrIndices = [0, 1, 2, -1, -2, 15, 30, -15, -30];
 
-        // console.log("explosion");
-
         explArrIndices.forEach((index) => {
-          cells[currentPosition + index].classList.add("impactBomb");
+          if (currentPosition < 29) {
+            cells[currentPosition + 0].classList.add("impactBomb");
+            cells[currentPosition + 1].classList.add("impactBomb");
+            cells[currentPosition + 2].classList.add("impactBomb");
+            cells[currentPosition - 1].classList.add("impactBomb");
+            cells[currentPosition - 2].classList.add("impactBomb");
+            cells[currentPosition + 15].classList.add("impactBomb");
+            cells[currentPosition + 30].classList.add("impactBomb");
+          } else if (currentPosition > 165) {
+            cells[currentPosition + 0].classList.add("impactBomb");
+            cells[currentPosition + 1].classList.add("impactBomb");
+            cells[currentPosition + 2].classList.add("impactBomb");
+            cells[currentPosition - 1].classList.add("impactBomb");
+            cells[currentPosition - 2].classList.add("impactBomb");
+            cells[currentPosition - 15].classList.add("impactBomb");
+            cells[currentPosition - 30].classList.add("impactBomb");
+          } else {
+            cells[currentPosition + index].classList.add("impactBomb");
+          }
         });
+
         gameOver();
       }, 1900);
+
+      // setTimeout(() => {
+      //   // let bomb = document.querySelector(".bomb");
+      //   // const cellList = document.querySelectorAll(".cell");
+
+      //   const explArrIndices = [0, 1, 2, -1, -2, 15, 30, -15, -30];
+
+      //   // console.log("explosion");
+
+      //   cells.forEach((index) => {
+      //   // const cellDown = cells[currentPosition + 15];
+      //   // if(cells[currentPosition + index].classList.contains("forbiddenCase")) {
+
+      //   // }
+      //   // if (cellDown.classList.contains("forbiddenCase")) {
+      //   //   cells[currentPosition + 0].classList.add("impactBomb");
+      //   //   cells[currentPosition + 1].classList.add("impactBomb");
+      //   //   cells[currentPosition + 2].classList.add("impactBomb");
+      //   //   cells[currentPosition - 1].classList.add("impactBomb");
+      //   //   cells[currentPosition - 2].classList.add("impactBomb");
+      //   //   cells[currentPosition - 15].classList.add("impactBomb");
+      //   //   cells[currentPosition - 30].classList.add("impactBomb");
+      //   }
+      //   gameOver();
+      // }, 1900);
 
       setTimeout(() => {
         // let bomb = document.querySelector(".bomb");
