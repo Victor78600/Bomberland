@@ -1,8 +1,10 @@
 const gameElement = document.querySelector(".game");
 const startButton = document.getElementById("btn-start");
-// const endGameScreen = document.getElementById("end-game-screen")
+const endGameScreen = document.getElementById("end-game-screen");
 const scoreElement = document.querySelector("#score span");
-// const restartButton = endGameScreen.querySelector("button")
+const restartButton = endGameScreen.querySelector("button");
+const looseGameScreen = document.getElementById("loose-game-screen");
+const replayButton = looseGameScreen.querySelector("button");
 // const readyToPlay = document.getElementById("ready-to-play")
 
 /**
@@ -13,8 +15,11 @@ const cellWidth = 15;
 const cellHeigth = 13;
 let cells = [];
 let playerPosition = 28;
-// let walls = 30;
+let walls = 2;
 let bombPosition = 0;
+let time = 30;
+let score = 0;
+
 const forbiddenCases = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 29, 30, 44, 45, 59, 60,
   74, 75, 89, 90, 104, 105, 119, 120, 134, 135, 149, 150, 164, 165, 179, 180,
@@ -22,22 +27,47 @@ const forbiddenCases = [
   36, 38, 40, 42, 62, 64, 66, 68, 70, 72, 92, 94, 96, 98, 100, 102, 122, 124,
   126, 128, 130, 132, 152, 154, 156, 158, 160, 162,
 ];
-/**
- * JSDoc :
- * this is the score
- */
-
-let score = 0;
 
 startButton.addEventListener("click", startGame);
+restartButton.addEventListener("click", restartGame);
+replayButton.addEventListener("click", restartGame);
 
 function startGame() {
+  startButton.hidden = true;
   generateBoard();
   showPlayer();
   forbiddenCase();
-  wall(30);
+  wall(walls);
   freePlayer();
   bombe();
+  timer();
+}
+
+function restartGame() {
+  endGameScreen.close();
+  looseGameScreen.close();
+  score = -1;
+  updateScore();
+  playerPosition = 28;
+  startGame();
+}
+
+function timer() {
+  let textTime = document.querySelector("#time span");
+  time--;
+  textTime.textContent = score;
+  // faire des parties de 30 secondes (à voir)
+  // la partie se termine à la fin du chrono
+}
+
+function updateScore() {
+  let scroreFinal = document.querySelector("#score span");
+  score++;
+  scroreFinal.textContent = score;
+}
+
+function noWallsLeft() {
+  return document.querySelectorAll(".wall").length === 0;
 }
 
 function generateBoard() {
@@ -114,7 +144,7 @@ document.addEventListener("keydown", (event) => {
         cells[playerPosition].classList.remove("player");
         playerPosition += 15;
         cells[playerPosition].classList.add("player");
-        console.log("Down");
+        // console.log("Down");
       }
       break;
     case "ArrowRight":
@@ -199,9 +229,15 @@ function bombe() {
             cells[i].classList.contains("impactBomb")
           ) {
             cells[i].classList.remove("wall");
+            updateScore();
+            if (noWallsLeft()) {
+              // won the game
+              endGameScreen.showModal();
+            }
+            gameOver();
           }
+          // la bombe explose au bout de 2 secondes
         }
-        // la bombe explose au bout de 2 secondes
       }, 2000);
 
       setTimeout(() => {
@@ -210,28 +246,25 @@ function bombe() {
 
         const explArrIndices = [0, 1, 2, -1, -2, 15, 30, -15, -30];
 
-        // const explArr = explArrIndices.map((indexOffset) => {
-        //   const newIndex = Array.from(cells).indexOf(bomb) + indexOffset;
-        //   return cells[newIndex];
-        // });
-
         // console.log("explosion");
+
         explArrIndices.forEach((index) => {
           cells[currentPosition + index].classList.add("impactBomb");
         });
+        gameOver();
       }, 1900);
 
       setTimeout(() => {
         // let bomb = document.querySelector(".bomb");
         // const cellList = document.querySelectorAll(".cell");
-
+        // if (
+        //   cells[i].classList.contains("impactBomb") &&
+        //   cells[i].classList.contains("player")
+        // ) {
+        //   endGameScreen.showModal();
+        // }
         const explArrIndices = [0, 1, 2, -1, -2, 15, 30, -15, -30];
-
-        // const explArr = explArrIndices.map((indexOffset) => {
-        //   const newIndex = Array.from(cells).indexOf(bomb) + indexOffset;
-        //   return cells[newIndex];
-        // });
-
+        gameOver();
         // console.log("explosion");
         explArrIndices.forEach((index) => {
           cells[currentPosition + index].classList.remove("impactBomb");
@@ -241,18 +274,15 @@ function bombe() {
   });
   // la bombe touche le mur
   // l'impact de la bombe devrait s'effacer
-  // setTimeout(() => {
-  //   const impactBombElements = document.querySelectorAll(".impactBomb");
-  //   impactBombElements.forEach((element) => {
-  //     element.classList.remove("impactBomb");
-  //   }, 2500);
+  // }
+  function gameOver() {
+    // de la seconde 2 à 3 après avoir posé la bombe, s'il y a une case joueur et impactBomb. la partie est terminé
+    if (cells[playerPosition].classList.contains("impactBomb")) {
+      looseGameScreen.showModal();
+    }
+  }
 }
-//   );
-// }
 
-// if (cell[i].contains(".player") && cell[i].contains("impactBomb")) {
-// Game over
-// }
 //     }
 //   }
 // });
@@ -266,12 +296,3 @@ function bombe() {
 //   );
 // }
 // bombe();
-
-function points() {
-  // gagne des points lorsqu'un mur se brise
-}
-
-function timer() {
-  // faire des parties de 30 secondes (à voir)
-  // la partie se termine à la fin du chrono
-}

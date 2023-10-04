@@ -72,3 +72,33 @@ h1 {
 .impactBomb {
   background-color: #f8333c;
 }
+
+#score {
+  text-align: center;
+}
+
+#time {
+  text-align: center;
+}
+
+#btn-start {
+  font-size: 3em;
+  align-items: center;
+  background-color: #dbd5b5;
+  font-family: "Pixelify Sans", cursive, sans-serif;
+  padding: 50px 80px;
+  margin-top: 140px;
+  margin-bottom: 140px;
+}
+
+dialog {
+  font-size: 2em;
+  background-color: #dbd5b5;
+  padding: 50px 80px;
+}
+
+dialog button {
+  cursor: pointer;
+  font-size: 1em;
+  font-family: "Pixelify Sans", cursive, sans-serif;
+}
