@@ -19,7 +19,7 @@ let cells = [];
 let playerPosition = 28;
 let walls = 2;
 let bombPosition = 0;
-let time = 30;
+let time = 60;
 let score = 0;
 
 const forbiddenCases = [
@@ -53,7 +53,7 @@ function restartGame() {
   score = -1;
   updateScore();
   playerPosition = 28;
-  time = 30;
+  time = 60;
   generateBoard();
   showPlayer();
   forbiddenCase();
@@ -260,28 +260,12 @@ function bombe() {
         const explArrIndices = [0, 1, 2, -1, -2, 15, 30, -15, -30];
 
         explArrIndices.forEach((index) => {
-          if (currentPosition < 29) {
-            cells[currentPosition + 0].classList.add("impactBomb");
-            cells[currentPosition + 1].classList.add("impactBomb");
-            cells[currentPosition + 2].classList.add("impactBomb");
-            cells[currentPosition - 1].classList.add("impactBomb");
-            cells[currentPosition - 2].classList.add("impactBomb");
-            cells[currentPosition + 15].classList.add("impactBomb");
-            cells[currentPosition + 30].classList.add("impactBomb");
-          } else if (currentPosition > 165) {
-            cells[currentPosition + 0].classList.add("impactBomb");
-            cells[currentPosition + 1].classList.add("impactBomb");
-            cells[currentPosition + 2].classList.add("impactBomb");
-            cells[currentPosition - 1].classList.add("impactBomb");
-            cells[currentPosition - 2].classList.add("impactBomb");
-            cells[currentPosition - 15].classList.add("impactBomb");
-            cells[currentPosition - 30].classList.add("impactBomb");
-          } else {
-            cells[currentPosition + index].classList.add("impactBomb");
+          const cell = cells[currentPosition + index];
+          if (cell) {
+            cell.classList.add("impactBomb");
           }
+          gameOver();
         });
-
-        gameOver();
       }, 1900);
 
       // setTimeout(() => {
@@ -322,7 +306,10 @@ function bombe() {
         gameOver();
         // console.log("explosion");
         explArrIndices.forEach((index) => {
-          cells[currentPosition + index].classList.remove("impactBomb");
+          const cell = cells[currentPosition + index];
+          if (cell) {
+            cell.classList.remove("impactBomb");
+          }
         });
       }, 3000);
     }
