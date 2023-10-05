@@ -27,7 +27,7 @@ const cellWidth = 15;
 const cellHeigth = 13;
 let cells = [];
 let playerPosition = 28;
-let walls = 30;
+let walls = 2;
 let bombPosition = 0;
 let time = 40;
 let score = 0;
@@ -311,6 +311,7 @@ function bombe(event, space) {
           if (noWallsLeft()) {
             // won the game
             endGameScreen.showModal();
+            clearInterval(timerInterval);
           }
           gameOver();
         }

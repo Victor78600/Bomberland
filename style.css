@@ -96,9 +96,10 @@ h1 {
 }
 
 dialog {
-  font-size: 2em;
+  font-size: 1em;
   background-color: #dbd5b5;
   padding: 50px 80px;
+  width: 500px;
 }
 
 dialog button {
@@ -137,6 +138,7 @@ dialog::backdrop {
     height: 4em;
     width: 4em;
     border-radius: 50%;
+    border: 2px solid black;
   }
 
   .right {
@@ -166,11 +168,12 @@ dialog::backdrop {
   #btn-start {
     font-size: 1, 5em;
     padding: 25px 40px;
-    margin-top: 77px;
-    margin-bottom: 70px;
+    margin-top: 150px;
+    margin-bottom: 40px;
     position: relative;
     left: 50%;
     translate: -50% -50%;
+    color: black;
   }
 
   .timeScore {
