@@ -112,6 +112,10 @@ dialog::backdrop {
 }
 
 @media only screen and (max-width: 540px) {
+  h1 {
+    font-size: 2em;
+  }
+
   .cell {
     height: 25px;
     width: 25px;
@@ -119,6 +123,7 @@ dialog::backdrop {
 
   .game {
     width: 375px;
+    margin-bottom: 0px;
   }
 
   dialog {
@@ -158,10 +163,6 @@ dialog::backdrop {
     background-color: black;
   }
 
-  .gamepad {
-    /* display: flex; */
-  }
-
   #btn-start {
     font-size: 1, 5em;
     padding: 25px 40px;
@@ -170,5 +171,11 @@ dialog::backdrop {
     position: relative;
     left: 50%;
     translate: -50% -50%;
+  }
+
+  .timeScore {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
 }
