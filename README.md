@@ -22,3 +22,5 @@ Your goal in Bomberland is to earn as many points as possible within the given t
 •	Losing: You lose the game if:
 1. You get caught in the explosion of your own bomb.
 2. The timer runs out before you've destroyed all the orange walls.
+
+   ## [Click here to play](https://victor78600.github.io/Bomberland/)
