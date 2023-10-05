@@ -34,22 +34,32 @@
 			<div class="game">
             </div>
 			<h2 id="score">Score: <span>0</span></h2>
-            <h2 id="time">Time: <span>30</span></h2>
+            <h2 id="time">Time: <span>40</span></h2>
+		</section>
+		<section class = "gamepad">
+		<div class="phoneButton up"></div> 
+		<div class="phoneButton right"></div>
+		<div class="phoneButton down"></div> 
+		<div class="phoneButton left"></div> 
+		<div class="phoneButton space"></div> 
 		</section>
 
 		<dialog id="end-game-screen">
 			<h2>Congrats ! You won !</h2>
-
+			<p class="finalScore">Score: <span>0</span></p>
+			<!-- <h2 id="score">Score: <span>0</span></h2> -->
 			<button id = "playAgain">Play Again</button>
 		</dialog>
 		<dialog id="loose-game-screen">
 			<h2>You loose !</h2>
-
+			<p class="finalScore">Score: <span>0</span></p>
+			<!-- <h2 id="score">Score: <span>0</span></h2> -->
 			<button id = "playAgain">Try Again</button>
 		</dialog>
 		<dialog id="timeout-game-screen">
 			<h2>Time is out !</h2>
-
+			<p class="finalScore">Score: <span>0</span></p>
+			<!-- <h2 id="score">Score: <span>0</span></h2> -->
 			<button id = "playAgain">Try Again</button>
 		</dialog>
 		<script src="./main.js"></script>

@@ -27,7 +27,8 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   max-width: 525px;
-  margin: 0 auto;
+  margin: auto;
+  margin-top: -10px;
   margin-bottom: 20px;
 }
 
@@ -87,8 +88,11 @@ h1 {
   background-color: #dbd5b5;
   font-family: "Pixelify Sans", cursive, sans-serif;
   padding: 50px 80px;
-  margin-top: 140px;
+  margin-top: 154px;
   margin-bottom: 140px;
+  position: relative;
+  left: 50%;
+  translate: -50% -50%;
 }
 
 dialog {
@@ -105,4 +109,66 @@ dialog button {
 
 dialog::backdrop {
   backdrop-filter: blur(4px) sepia(0.2);
+}
+
+@media only screen and (max-width: 540px) {
+  .cell {
+    height: 25px;
+    width: 25px;
+  }
+
+  .game {
+    width: 375px;
+  }
+
+  dialog {
+    font-size: 1em;
+    background-color: #dbd5b5;
+    padding: 25px 40px;
+  }
+
+  .phoneButton {
+    background-color: #dbd5b5;
+    height: 4em;
+    width: 4em;
+    border-radius: 50%;
+  }
+
+  .right {
+    margin-left: 40%;
+  }
+
+  .down {
+    margin-left: 25%;
+  }
+
+  .left {
+    margin-left: 10%;
+    margin-top: -125px;
+  }
+
+  .up {
+    margin-left: 25%;
+    /* margin-top: -20%; */
+  }
+
+  .space {
+    margin-top: -70px;
+    margin-left: 75%;
+    background-color: black;
+  }
+
+  .gamepad {
+    /* display: flex; */
+  }
+
+  #btn-start {
+    font-size: 1, 5em;
+    padding: 25px 40px;
+    margin-top: 77px;
+    margin-bottom: 70px;
+    position: relative;
+    left: 50%;
+    translate: -50% -50%;
+  }
 }
