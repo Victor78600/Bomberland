@@ -18,7 +18,10 @@ const buttonLeft = document.querySelector(".left.phoneButton");
 buttonLeft.addEventListener("click", () => move(null, "ArrowLeft"));
 const buttonSpace = document.querySelector(".space.phoneButton");
 buttonSpace.addEventListener("click", () => bombe(null, " "));
-
+let explosion = new Audio("./sounds/explosion.mp3");
+let drop = new Audio("./sounds/drop.mp3");
+let lose = new Audio("./sounds/lose.mp3");
+let win = new Audio("./sounds/win.mp3");
 /**
  * GLOBAL VARIABLES
  */
@@ -27,7 +30,7 @@ const cellWidth = 15;
 const cellHeigth = 13;
 let cells = [];
 let playerPosition = 28;
-let walls = 35;
+let walls = 45;
 let bombPosition = 0;
 let time = 40;
 let score = 0;
@@ -77,6 +80,18 @@ function restartGame() {
   clearInterval(timerInterval);
   time = 40;
   timer();
+}
+
+function sound() {
+  explosion.pause();
+  explosion.currentTime = 0;
+  explosion.play();
+}
+
+function dropSound() {
+  drop.pause();
+  drop.currentTime = 0;
+  drop.play();
 }
 
 function timer() {
@@ -165,6 +180,12 @@ function move(event, direction) {
     case "ArrowUp":
       const cellUp = cells[playerPosition - 15];
       if (
+        cellUp.classList.contains("forbiddenCase") ||
+        cellUp.classList.contains("wall")
+      ) {
+        return;
+      }
+      if (
         //le joueur ne passe pas au travers les cases grisées
         !cellUp.classList.contains("forbiddenCase") &&
         //le joueur ne passe pas au travers du mur
@@ -180,12 +201,19 @@ function move(event, direction) {
       }
       if (cellUp.classList.contains("impactBomb")) {
         canMove = false;
+        lose.play();
         looseGameScreen.showModal();
         clearInterval(timerInterval);
       }
       break;
     case "ArrowDown":
       const cellDown = cells[playerPosition + 15];
+      if (
+        cellDown.classList.contains("forbiddenCase") ||
+        cellDown.classList.contains("wall")
+      ) {
+        return;
+      }
       if (
         !cellDown.classList.contains("forbiddenCase") &&
         !cellDown.classList.contains("wall") &&
@@ -199,12 +227,19 @@ function move(event, direction) {
       }
       if (cellDown.classList.contains("impactBomb")) {
         canMove = false;
+        lose.play();
         looseGameScreen.showModal();
         clearInterval(timerInterval);
       }
       break;
     case "ArrowRight":
       const cellRight = cells[playerPosition + 1];
+      if (
+        cellRight.classList.contains("forbiddenCase") ||
+        cellRight.classList.contains("wall")
+      ) {
+        return;
+      }
       if (
         !cellRight.classList.contains("forbiddenCase") &&
         !cellRight.classList.contains("wall") &&
@@ -218,12 +253,19 @@ function move(event, direction) {
       }
       if (cellRight.classList.contains("impactBomb")) {
         canMove = false;
+        lose.play();
         looseGameScreen.showModal();
         clearInterval(timerInterval);
       }
       break;
     case "ArrowLeft":
       const cellLeft = cells[playerPosition - 1];
+      if (
+        cellLeft.classList.contains("forbiddenCase") ||
+        cellLeft.classList.contains("wall")
+      ) {
+        return;
+      }
       if (
         !cellLeft.classList.contains("forbiddenCase") &&
         !cellLeft.classList.contains("wall") &&
@@ -237,6 +279,7 @@ function move(event, direction) {
       }
       if (cellLeft.classList.contains("impactBomb")) {
         canMove = false;
+        lose.play();
         looseGameScreen.showModal();
         clearInterval(timerInterval);
       }
@@ -297,6 +340,7 @@ function bombe(event, space) {
     const currentPosition = playerPosition;
     let currentCell = cells[currentPosition];
     currentCell.classList.add("bomb");
+    dropSound();
     // timer avant que la bombe explose
     setTimeout(() => {
       // let bomb = document.querySelector(".bomb");
@@ -310,6 +354,7 @@ function bombe(event, space) {
           updateScore();
           if (noWallsLeft()) {
             // won the game
+            win.play();
             endGameScreen.showModal();
             clearInterval(timerInterval);
           }
@@ -332,6 +377,7 @@ function bombe(event, space) {
           cell.classList.add("impactBomb");
         }
         gameOver();
+        sound();
       });
     }, 1900);
 
@@ -360,6 +406,7 @@ function gameOver() {
   if (cells[playerPosition].classList.contains("impactBomb")) {
     looseGameScreen.showModal();
     canMove = false;
+    lose.play();
     clearInterval(timerInterval);
   }
   // move() = false;

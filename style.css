@@ -41,7 +41,7 @@ h1 {
 
 .player {
   /* background-color: var(--green); */
-  background-image: url(player.png);
+  background-image: url(./images/player.png);
   background-size: cover;
 }
 
