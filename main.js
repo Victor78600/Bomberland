@@ -106,6 +106,7 @@ function timer() {
     if (time === 0) {
       clearInterval(timerInterval);
       timeOutGameScreen.showModal();
+      lose.play();
       canMove = false;
     }
   }, 1000);
